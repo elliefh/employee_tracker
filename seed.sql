@@ -1,7 +1,7 @@
 USE employeeDB;
 
 INSERT INTO department
-    (name)
+    (department_name)
 VALUES
     ("Sales"),
     ("Engineering"),
@@ -26,14 +26,13 @@ VALUES
 INSERT INTO employee
     (first_name, last_name, role_id, manager_id)
 VALUES
-    ("Chandler", "Bing", 1, NULL),
+    ("Chandler", "Bing", 1, 1),
     ("Joey", "Tribbiani", 1, NULL),
-    ("Phoebe", "Buffay", 1, NULL),
-    ("Rachel", "Green", 1, NULL),
-    ("Monica", "Geller", 1, NULL),
-    ("", "", 1, NULL),
-    ("Mike", "Hannigan", 1, NULL),
-    ("Jill", "Green", 1, NULL),
-    ("Richard", "Burr", 1, NULL),
-    ("Janice", "Hosenstein", 1, NULL),
-    ("Charlie", "Wheeler", 1, NULL)
+    ("Phoebe", "Buffay", 2, 1),
+    ("Rachel", "Green", 2, NULL),
+    ("Monica", "Geller", 3, 1),
+    ("Mike", "Hannigan", 3, NULL),
+    ("Jill", "Green", 4, 1),
+    ("Richard", "Burr", 4, NULL),
+    ("Janice", "Hosenstein", 5, 1),
+    ("Charlie", "Wheeler", 5, NULL)
