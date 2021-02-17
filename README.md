@@ -27,6 +27,9 @@ So that I can organize and plan my business
 
 ```
 
+Please see below for a walkthrough of the application:
+![Image](assets/walkthrough.gif)
+
 ## Links
 - [Repository](https://github.com/elliefh/employee_tracker)
 
