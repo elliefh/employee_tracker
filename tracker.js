@@ -210,7 +210,7 @@ function updateEmployee() {
     ],
     function(err, res) {
       if (err) throw err;
-      console.log(response.employee_id + " role updated!\n");
+      console.log("employee with ID: " response.employee_id + " has their role updated!\n");
       selectOptions();
     }
     )
