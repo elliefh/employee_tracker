@@ -20,6 +20,7 @@ connection.connect(function(err) {
     selectOptions();
 });
 
+// Prompt user to choose an action
 function selectOptions() {
   inquirer
   .prompt({
@@ -54,11 +55,12 @@ function selectOptions() {
   });
 }
 
+// Prompt user which department to add and update table
 function addDept() {
   inquirer
   .prompt({
     name: "department",
-    message: "Please insert department name:",
+    message: "Please input department name:",
     type: "input"
   }).then(function(response){
     connection.query(
@@ -68,23 +70,95 @@ function addDept() {
       },
       function(err, res) {
         if (err) throw err;
-        console.log(response.department + " inserted!\n");
+        console.log(response.department + " has been added!\n");
         selectOptions();
       }
     );
   });
 }
 
+
 function addRole() {
-  selectOptions();
+  inquirer
+  .prompt([
+    {
+      name: "title",
+      message: "Please input role title:",
+      type: "input"
+    },
+    {
+      name: "salary",
+      message: "Please input salary for this role:",
+      type: "number"
+    },
+    {
+      name: "department_id",
+      message: "Please input deparmtnet ID for this role:",
+      type: "number"
+    }
+  ]).then(function(response){
+    connection.query(
+      "INSERT INTO role SET ?",
+      [
+        {
+          title: response.title,
+          salary: response.salary,
+          department_id: response.department_id
+        }
+      ],
+      function(err, res) {
+        if (err) throw err;
+        console.log(response.title + " has been added!\n");
+        selectOptions();
+      }
+    );
+  });
 }
 
 function addEmployee() {
-  selectOptions();
+  inquirer
+  .prompt([
+    {
+      name: "first_name",
+      message: "Please insert employee's first name:",
+      type: "input"
+    },
+    {
+      name: "last_name",
+      message: "Please insert employee's last name:",
+      type: "input"
+    },
+    {
+      name: "role_id",
+      message: "Please insert employee's role ID:",
+      type: "number" 
+    },
+    {
+      name: "manager_id",
+      message: "Does this employee have a manager? 1 = Yes, 0 = No",
+      type: "list",
+      choices: [1, 2]
+    },
+  ]).then(function(response){
+    
+    connection.query(
+      "INSERT INTO employee SET ?",
+      {
+        first_name: response.first_name,
+        last_name: response.last_name,
+        role_id: response.role_id,
+        manager_id: response.manager_id
+      },
+      function(err, res) {
+        if (err) throw err;
+        console.log(response.first_name + " " + response.last_name + " has been added!\n");
+        selectOptions();
+      }
+    );
+  });
 }
 
 function viewDept() {
-  console.log("Selecting all departments...\n");
   connection.query("SELECT * FROM department", function(err, res) {
     if (err) throw err;
     // Log all results of the SELECT statement
@@ -94,26 +168,35 @@ function viewDept() {
 }
 
 function viewRole() {
-  selectOptions();
+  connection.query("SELECT * FROM role", function(err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.table(res);
+    selectOptions();
+  });
 }
 
 function viewEmployee() {
-  selectOptions();
+  connection.query("SELECT * FROM employee", function(err, res) {
+    if (err) throw err;
+    // Log all results of the SELECT statement
+    console.table(res);
+    selectOptions();
+  });
 }
 
 function updateEmployee() {
-  // console.log("Updating all Rocky Road quantities...\n");
   inquirer
   .prompt([
     {
       name: "employee_id",
-      message: "Please type employee id:",
-      type: "input"
+      message: "Please input employee id:",
+      type: "number"
     },
     {
       name: "new_role",
-      message: "Please type employee's new role:",
-      type: "input"
+      message: "Please input employee's new role:",
+      type: "number"
     }
   ]).then(function(response){
     connection.query(
